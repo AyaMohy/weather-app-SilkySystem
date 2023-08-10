@@ -18,8 +18,12 @@
     <div
       class="weather__degree q-ma-auto text-center flex justify-center items-center"
     >
-      <div>{{ temperature }}&deg; {{ temp_unit }}</div>
-      <q-btn label="toggle" @click="toggleTemp"  class="weather__degree--btn-toggle"/>
+      <div>{{ tempDegree }}&deg; {{ temp_unit }}</div>
+      <q-btn
+        :label="temp_unit == 'C' ? 'Fahrenheit': 'Celsius '"
+        @click="toggleTemp"
+        class="weather__degree--btn-toggle"
+      />
     </div>
   </div>
 </template>
@@ -29,9 +33,8 @@ import axios from "axios";
 import { onBeforeMount, ref } from "vue";
 
 const weatherInfo = ref(null);
-const temperature = ref(null);
-const tempDegree=ref(null);
-const temp_unit=ref('C')
+const tempDegree = ref(null);
+const temp_unit = ref("C");
 const city = "New Cairo";
 const getCurentWeather = async () => {
   try {
@@ -51,17 +54,15 @@ https://api.openweathermap.org/data/2.5/weather?lat=${data[0]?.lat}&lon=${data[0
 
 // toggle between temperature
 const toggleTemp = () => {
-  if( temp_unit.value == 'C'){
-    temperature.value = ((tempDegree.value) * 9) / 5 + 32;
-    console.log("f:", )
-    temp_unit.value = 'F'
+  if (temp_unit.value == "C") {
+    console.log("f:", tempDegree.value *9);
+    tempDegree.value = (tempDegree.value * 9) / 5 + 32;
+    temp_unit.value = "F";
+  } else {
+    console.log("c:", tempDegree.value- 32 );
+    tempDegree.value = ((tempDegree.value - 32) * 5) / 9;
+    temp_unit.value = "C";
   }
-  else {
-  temperature.value = ((tempDegree.value) - 32)  * 5/9;
-  temp_unit.value == 'C'
-
-  }
-  // return temp;
 };
 
 onBeforeMount(() => {
@@ -95,7 +96,7 @@ onBeforeMount(() => {
     color: #6486ff;
     height: auto;
     height: 67px;
-    &--btn-toggle{
+    &--btn-toggle {
       margin-left: 10px;
     }
     @media (max-width: $breakpoint-xs-max) {

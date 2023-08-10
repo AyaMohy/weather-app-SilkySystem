@@ -1,23 +1,18 @@
 <template>
   <div class="full-width row g-header justify-center items-center">
     <div
-      class="g-header__center col-12 row text-center q-ma-auto animation-slide-bottom"
+      class="g-header__center col-12 row text-center  q-ma-auto animation-slide-bottom"
     >
-      <!-- <div class="col row text-center q-ma-auto"> -->
-      <div class="col-12">
+      <div class="col-12 ">
         <img
           :style="{ width: '100px', height: '100.64px' }"
           src="Group 1171274739.png"
         />
       </div>
       <div class="col-12 g-header__center--h1 q-pa-md">Weather Climate</div>
-      <!-- </div> -->
     </div>
     <div class="g-header__left-img larg-screen-only">
       <img src="Group.png" />
-    </div>
-    <div class="g-header__right-img larg-screen-only">
-      <!-- <img :src="imgRight" /> -->
     </div>
   </div>
 </template>
@@ -44,6 +39,7 @@ export default {
     rgba(57, 147, 73, 0.3) 100%
   );
   &__center {
+    margin-top: -100px;
     img {
       width: 100px;
       height: 75.64px;
