@@ -1,5 +1,5 @@
 <template>
-  <div class="full-width weather q-ma-auto" v-if="weatherInfo">
+  <div class="full-width weather q-ma-auto">
     <div class="weather__input container">
       <q-input
         standout=" text-lightBlue"
@@ -9,30 +9,32 @@
         @keyup.enter="submit"
       />
     </div>
-    <div class="weather__now q-ma-auto flex justify-center items-center">
-      <div class="q-pr-md weather__now-text" style="margin: 0">
-        {{ weatherInfo.name }}
+    <div v-if="weatherInfo">
+      <div class="weather__now q-ma-auto flex justify-center items-center">
+        <div class="q-pr-md weather__now-text" style="margin: 0">
+          {{ weatherInfo.name }}
+        </div>
       </div>
-    </div>
-    <div class="weather__now q-ma-auto flex justify-center items-center">
-      <div class="q-px-sm weather__now-text">
-        {{ weatherInfo.weather[0].description }}
+      <div class="weather__now q-ma-auto flex justify-center items-center">
+        <div class="q-px-sm weather__now-text">
+          {{ weatherInfo.weather[0].description }}
+        </div>
+        <q-icon
+          :name="`img:http://openweathermap.org/img/w/${weatherInfo.weather[0].icon}.png`"
+          size="lg"
+        />
       </div>
-      <q-icon
-        :name="`img:http://openweathermap.org/img/w/${weatherInfo.weather[0].icon}.png`"
-        size="lg"
-      />
-    </div>
 
-    <div
-      class="weather__degree q-ma-auto text-center flex justify-center items-center"
-    >
-      <div>{{ tempDegree }}&deg; {{ temp_unit }}</div>
-      <q-btn
-        :label="temp_unit == 'C' ? 'Fahrenheit' : 'Celsius '"
-        @click="toggleTemp"
-        class="weather__degree--btn-toggle"
-      />
+      <div
+        class="weather__degree q-ma-auto text-center flex justify-center items-center"
+      >
+        <div>{{ tempDegree }}&deg; {{ temp_unit }}</div>
+        <q-btn
+          :label="temp_unit == 'C' ? 'Fahrenheit' : 'Celsius '"
+          @click="toggleTemp"
+          class="weather__degree--btn-toggle"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -56,17 +58,15 @@ https://api.openweathermap.org/data/2.5/weather?lat=${data[0]?.lat}&lon=${data[0
 `);
     weatherInfo.value = await response.data;
     tempDegree.value = await weatherInfo.value.main.temp;
-  }
-  // handle error
-  catch (error) {
+  } catch (error) {
+    // handle error
     $q.dialog({
       title: "Error",
       message:
         "Unable to establish a network connection or incorrect city name entered. Please check your internet connection and ensure the city name is spelled correctly, then try again.",
-    })
-    .onOk(() => {
-      cityFeild.value=''
-    })
+    }).onOk(() => {
+      cityFeild.value = "";
+    });
   }
 };
 
@@ -129,7 +129,7 @@ onBeforeMount(() => {
     width: 500px;
     margin: 20px auto;
     @media (max-width: $breakpoint-xs-max) {
-  width: 90%;
+      width: 90%;
     }
   }
 }
